@@ -1,0 +1,187 @@
+<div class="bg-black w-full h-screen fixed top-0 left-0 z-30" style="background-color: rgba(0, 0, 0, 0.5);"
+    (click)="closeModal(0)">
+
+    <button (click)="closeModal(0)" class="w-[30px] h-[30px] text-white text-2xl  a
+        bsolute top-2 right-2 cursor-pointer fa-solid fa-x"></button>
+
+
+    <div class="w-full max-w-[370px] max-h-[620px] h-fit  
+    sm:w-fit  sm:max-w-[90vw] sm:h-3/4 sm:max-h-[90vh]  
+    bg-stone-800 rounded-lg sm:rounded-none border-[1px] border-stone-600
+    absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30
+    flex flex-col items-center justify-start  
+    " (click)="$event.stopPropagation()">
+
+        <!-- this is card header  on small screen  if bigger screen it will be hidden -->
+        <div class="header-card w-full h-[61px] flex flex-row items-center justify-between sm:hidden">
+            <a href="/{{postModal.user.nick}}" class="flex flex-row items-center justify-start pl-[16px] ">
+                <div
+                    class="w-[35px] h-[35px] bg-gradient-to-tr from-yellow-500 to-rose-700 rounded-full flex flex-row items-center justify-center self-center">
+                    <img src="{{ environmento.apiUrl}}getimage/{{ postModal.user.img ?? 'default.png'}}"
+                        class="w-[31px] h-[31px] border-2 border-black object-cover rounded-full self-center   " />
+                </div>
+                <span class="text-white self-center ml-[8px] text-xs overflow-hidden w-fit font-semibold ">{{
+                    postModal.user.nick}}</span>
+            </a>
+            <div class="text-white pr-[16px] cursor-pointer font-semibold text-xs">
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+
+        </div>
+        <!-- sssssss -->
+
+        <div class="body-card bg-black w-full h-[calc(100%-61px)] 
+            sm:h-full sm:w-full rounded-b-lg sm:rounded-none flex flex-col sm:flex-row 
+            items-start justify-start sm:justify-between ">
+
+            <!-- image -->
+            <div class="w-[368px] h-fit max-h-[370px] sm:w-[100vh] sm:max-w-fit sm:h-full sm:max-h-fit bg-black">
+                <img src="{{ environmento.apiUrl}}getimageposts/{{ postModal.image_path ?? 'default.png'}}"
+                    class="w-full h-full max-h-[370px] sm:max-h-full   object-contain " />
+            </div>
+            <div class="w-full sm:w-[404px] sm:min-w-[404px] h-auto sm:h-full flex flex-col ">
+
+                <!-- header -->
+                <div
+                    class="header-card sm:border-b-[1px] sm:border-stone-800 w-full h-[61px] sm:flex flex-row items-center justify-between hidden">
+                    <div class="flex flex-row items-center justify-start pl-[16px] ">
+                        <div
+                            class="w-[35px] h-[35px] bg-gradient-to-tr from-yellow-500 to-rose-700 rounded-full flex flex-row items-center justify-center self-center">
+                            <img src="{{ environmento.apiUrl}}getimage/{{ postModal.user.image ?? 'default.png'}}"
+                                class="w-[31px] h-[31px] border-2 border-black object-cover rounded-full self-center   " />
+                        </div>
+                        <span class="text-white self-center ml-[8px] text-xs overflow-hidden w-fit font-semibold ">{{
+                            postModal.user.nick}}</span>
+                    </div>
+                    <div class="text-white pr-[16px] cursor-pointer font-semibold text-xs">
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="sm:flex  sm:flex-col-reverse sm:items-start sm:justify-start sm:w-full sm:h-[calc(100%-124px)]  ">
+                    <!-- opcion like comment and share -->
+                    <div class="w-full h-[53px] pt-[6px] mt-[4px] 
+                        sm:border-t-[1px] sm:border-stone-800
+                        sm:pt-0 bg-black px-[16px] flex flex-row items-center justify-between">
+                        <div class="flex flex-row items-center justify-start gap-[8px]
+                         [&>*]:text-2xl [&>*]:cursor-pointer [&>*]:self-center
+                        [&>*:hover]:scale-110">
+                            @if(postModal.likedByCurrentUser) {
+                            <i (click)="dislike(postModal.id)" class="fa-solid fa-heart  text-red-500 focus:scale-120 ">
+                            </i>
+                            }
+                            @else {
+                            <i (click)="like(postModal.id)"
+                                class="fa-regular fa-heart text-white hover:text-red-500 hover:fa-solid active:fa-solid active:text-red-500 ">
+                            </i>
+                            }
+                            <i class="fa-regular fa-comment text-white "> </i>
+                            <i class="fa-regular fa-paper-plane  text-white "> </i>
+                        </div>
+                        <div class=" w-full h-full flex flex-row items-center justify-end">
+                            <i class="fa-regular fa-bookmark  text-white "> </i>
+                        </div>
+                    </div>
+
+                    <!-- comments -->
+                    <div
+                        class="w-full h-full my-[4px] flex flex-col items-start justify-start sm:h-[calc(100%-53px)] px-[16px]">
+                        <span class="text-white w-fit text-xs font-semibold ">
+                            {{postModal.likesCount}} Likes {{postModal.comments.length}} Comments
+                        </span>
+                        <div
+                            class="w-full h-[80px] my-[4px] sm:h-full flex flex-col items-start justify-start overflow-y-auto ">
+                            <div class="w-full h-fit mb-[10px] flex flex-row items-start justify-start  border-b-[1px] border-stone-700">
+                                <a href="{{postModal.user.nick}}"
+                                    class="w-[35px] h-fit my-[4px] flex flex-col items-center justify-start self-start ">
+                                    <img src="{{ environmento.apiUrl}}getimage/{{ postModal.user.image ?? 'default.png'}}"
+                                        class="w-[31px] h-[31px] border-2 border-black object-cover rounded-full self-center  flex items-center justify-start " />
+                                </a>
+                                <div class="w-full h-fit my-[4px] flex flex-col  items-start justify-start  ">
+                                    <span class="text-white w-fit text-xs font-semibold  px-[4px] ml-[4px]">
+                                        <a href="{{postModal.user.nick}}"
+                                            class="cursor-pointer font-semibold text-xs ml-[4px] ">{{postModal.user.name
+                                            ??
+                                            'asdfa'}}
+                                        </a>
+                                        <pre class="text-white w-fit text-xs font-normal font-sans px-[4px] ">{{postModal.description
+                                            ?? ' Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, veniam
+                                            adipisci. '}}</pre>
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+                            @if (postModal.comments.length == 0)
+                            {
+                            <div class="w-full h-fit mb-[10px] flex flex-row items-start justify-start text-white ">
+                                No hay mas comentarios...
+                            </div>
+                            }
+                            @for (comment of postModal.comments; track comment) {
+                            <div class="w-full h-fit mb-[10px] flex flex-row items-start justify-start  ">
+                                <a href="{{comment.user.nick}}"
+                                    class="w-[35px] h-fit my-[4px] flex flex-col items-center justify-start self-start ">
+                                    <img src="{{ environmento.apiUrl}}getimage/{{comment.user.image ?? 'default.png'}}"
+                                        class="w-[31px] h-[31px] border-2 border-black object-cover rounded-full self-center  flex items-center justify-start " />
+                                </a>
+                                <div class="w-full h-fit my-[4px] flex flex-col  items-start justify-start  ">
+                                    <span class="text-white w-fit text-xs font-semibold  px-[4px] ml-[4px]">
+                                        <a href="{{comment.user.nick}}"
+                                            class="cursor-pointer font-semibold text-xs ml-[4px] ">{{comment.user.name
+                                            ??
+                                            'asdfa'}}
+                                        </a>
+                                        <pre class="text-white w-fit text-xs font-normal font-sans px-[4px] ">{{comment.content
+                                            ?? ' Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, veniam
+                                            adipisci. '}}</pre>
+
+                                    </span>
+                                    <span
+                                        class="text-white w-fit text-xs font-semibold  px-[4px] ml-[8px] flex flex-row items-center justify-start">
+                                        <div>{{this.postsService.formatDate(comment.created_at)}}</div>
+                                        <div
+                                            class="text-white w-fit text-xs font-semibold  px-[4px] ml-[4px] cursor-pointer ">
+                                            Respond</div>
+                                    </span>
+                                </div>
+
+                            </div>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- comment box -->
+                <!-- <div
+                    class="w-full h-fit flex flex-row items-center justify-between px-[16px] py-[4px] sm:self-end sm:border-t-[1px] sm:border-stone-800 ">
+                    <textarea type="text" placeholder="Add a comment..."
+                        class="w-full h-[20px] resize-none sm:h-[50px] sm:my-[10px]   bg-black text-white text-xs placeholder:text-white placeholder:text-xs"></textarea>
+                    <button
+                        class=" text-blue-500 hover:text-blue-300 cursor-pointer font-semibold text-sm px-[8px]">Post</button>
+
+                </div> -->
+                <form [formGroup]="commentForm" (ngSubmit)="onSubmit()"
+                    class="relative w-full h-fit flex flex-row items-center justify-between px-[16px] py-[4px] sm:self-end sm:border-t-[1px] sm:border-stone-800 ">
+                    <textarea formControlName="comment" placeholder="Add a comment..."
+                        class="w-full h-[20px] resize-none sm:h-[50px] sm:my-[10px]   bg-black text-white text-xs placeholder:text-white placeholder:text-xs"></textarea>
+                    <input type="submit" [ngClass]="{'hidden': (commentForm.value.comment === '')}"
+                        class="text-blue-500 hover:text-blue-300 cursor-pointer font-semibold text-sm px-[8px]"
+                        value="Post" />
+                    <div class="text-red-500 text-xs absolute left-3 bottom-0
+                        focus:border-indigo-500 focus:ring-indigo-500
+                    " *ngIf="commentForm.controls.comment.invalid && commentForm.controls.comment.touched">
+                        No puedes comentar con menos de 3 caracteres.
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>

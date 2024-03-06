@@ -1,0 +1,140 @@
+@if (!show){
+<div class="w-full sm:w-[calc(100%-16rem)] sm:ml-[16rem] h-[100vh]  flex items-center justify-center absolute top-0 left-0 z-50">
+    <i class="fa-brands fa-instagram text-4xl animate-pulse 
+    absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50
+    text-white cursor-pointer
+    "></i>
+
+</div>
+} @else{
+
+<div class="w-full h-fit flex flex-col mx-auto items-center justify-start text-white max-w-[935px]">
+
+    <div class="w-full h-[44px] text-white
+    flex flex-row items-center justify-between px-[16px]
+    border-b-[1px] border-stone-600 sm:hidden
+    ">
+        <div class=" self-center ">
+            <i class="fa-solid fa-gear text-2xl"></i>
+        </div>
+        <div class="flex-grow self-center">
+            <div class="flex flex-row items-center justify-center">
+                <span> nelsoncorrea89</span>
+                <i class="ml-[4px] fa-solid fa-chevron-down text-lg"></i>
+            </div>
+        </div>
+        <div class=" self-center ">
+            <i class="fa-solid fa-user-plus text-2xl"></i>
+        </div>
+
+    </div>
+
+    <div class="flex flex-row items-center justify-start w-full h-fit px-[16px] pt-[16px] pb-[24px]">
+        <div class="w-[77px] h-[77px] min-w-[77px] min-h-[77px]  mr-[28px]">
+            <img class="w-[77px] h-[77px] object-cover rounded-full"
+                src="{{ environmento.apiUrl}}getimage/{{user.image ?? 'default.png'}}" alt="">
+        </div>
+
+        <div class="w-full h-fit   text-white">
+            <div class="w-full h-full   text-white flex flex-col items-start justify-start">
+                <span class="text-xl content-center mb-[12px]">
+                    {{user.nick ?? 'user'}}
+                </span>
+                <div class="w-full h-full text-[13px] font-bold  
+                 text-white flex flex-row items-start justify-start
+                [&>button]:mr-[4px] [&>button]:px-[16px] 
+                [&>button]:py-[6px] [&>button]:rounded-md
+                [&>button]:bg-stone-700
+                [&>button:hover]:bg-stone-900 
+                ">
+                    <button>Edit profile</button>
+                    <button>view archive</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="w-full h-fit  text-white px-[16px] py-[4px] text-sm font-semibold capitalize">
+        {{user.name ?? 'user name'}}
+    </div>
+    <div class="w-full h-fit py-[4px] px-[16px] ">
+        <div class="w-fit h-fit flex items-center bg-stone-700 
+        rounded-2xl [line-height:1] text-center text-white px-[8px] py-[6px]
+        hover:bg-stone-600 cursor-pointer  text-xs
+        ">
+            {{'@' + (user.nick ?? 'user')}}
+        </div>
+    </div>
+    <div class="w-full h-fit pt-[4px] pb-[16px] px-[16px] border-b-[1px] border-stone-600">
+        {{ user.description ?? 'user description'}}
+    </div>
+    <div class="w-full h-fit py-[12px] border-b-[1px] border-stone-600
+    flex flex-row items-center justify-between 
+    ">
+        <div class="w-full h-full flex flex-col items-center justify-center cursor-pointer">
+            <div class="text-sm font-bold">{{ user.imagesCount ?? '0'}} </div>
+            <div class="text-sm text-stone-400">Posts</div>
+        </div>
+        <div class="w-full h-full flex flex-col items-center justify-center cursor-pointer">
+            <div class="text-sm font-bold">10 </div>
+            <div class="text-sm text-stone-400">Followers</div>
+        </div>
+        <div class="w-full h-full flex flex-col items-center justify-center cursor-pointer">
+            <div class="text-sm font-bold">10 </div>
+            <div class="text-sm text-stone-400">Following</div>
+        </div>
+
+    </div>
+    <div class="w-full h-fit py-[12px] border-b-[1px] border-stone-600
+    flex flex-row items-center justify-between 
+    ">
+        <div class="w-full h-full flex flex-col items-center justify-center">
+            <i class="fa-solid fa-table-cells text-2xl cursor-pointer"></i>
+        </div>
+        <div class="w-full h-full flex flex-col items-center justify-center">
+            <i class="fa-regular fa-bookmark text-2xl cursor-pointer"></i>
+        </div>
+        <div class="w-full h-full flex flex-col items-center justify-center">
+            <i class="fa-solid fa-hand-holding-heart text-2xl cursor-pointer"></i>
+        </div>
+
+    </div>
+    @if (posts.length == 0) {
+        <div class="w-full h-full flex items-center justify-center text-white text-3xl">
+            No posts found
+        </div>
+
+    }
+    @else {
+        <div class=" w-full h-fit grid grid-cols-3 gap-[4px]">
+        
+            @for (post of posts ; track post) {
+            <div class="bg-stone-700 w-full pb-[100%] relative">
+                <div 
+                (click)="openModal(post.id)"
+                class="absolute w-full h-full bg-stone-400 z-10 cursor-pointer" >
+                    <img src="{{ environmento.apiUrl}}getimageposts/{{post.image_path ?? 'default.png'}}" class="w-full h-full object-cover z-10">
+                </div>
+            </div>
+            }
+    
+        </div>
+    }
+    
+
+    
+
+
+</div>
+}
+
+@if (showModal){
+    <app-postmodal [postModal]="postModal"  [fechaModal]="fechaModal" 
+        (toggleModalEvent)="openModal($event)" 
+        (toggleLikeEvent)="like($event)" 
+        (toggleDislikeEvent)="dislike($event)" 
+    
+        (toggleCommentEvent)="commentPost($event.id, $event.content)"
+    
+        ></app-postmodal>
+    }

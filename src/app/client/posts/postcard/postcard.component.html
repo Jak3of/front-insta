@@ -1,0 +1,71 @@
+<div class="w-full h-fit  py-[10px] border-botton-1 border-stone-600">
+    <div class="header w-full h-[48px]   flex flex-row items-start justify-start">
+        <a href="/{{post.user.nick}}" class="w-fit h-full pl-[2px] flex flex-row items-start justify-start">
+            <div
+                class="w-[35px] h-[35px] bg-gradient-to-tr from-yellow-500 to-rose-700 rounded-full flex flex-row items-center justify-center self-center">
+                <img src="{{ environmento.apiUrl}}getimage/{{post.user.image ?? 'default.png'}}"
+                    class="w-[31px] h-[31px] border-2 border-black object-cover rounded-full self-center   " />
+            </div>
+            <span
+                class="text-white self-center ml-[4px] text-xs overflow-hidden w-fit font-semibold ">{{post.user.nick}}</span>
+        </a>
+        <div class=" text-gray-400 h-full pl-[2px] flex flex-row items-start justify-start"
+            (click)="openModalC(post.id)">
+            <span class=" self-center ml-[4px] text-xs w-fit">•</span>
+            <span class=" self-center ml-[4px] text-xs w-fit">{{fecha}}</span>
+        </div>
+    </div>
+    <div class="body w-[calc(min(470px,100vw))] h-[calc(min(470px,100vw))]  ratio-1x1 " (click)="openModalC(post.id)">
+        <img src="{{ environmento.apiUrl}}getimageposts/{{post.image_path ?? 'default.png'}}"
+            class="w-full h-full  object-cover  ratio-1x1 " />
+    </div>
+    <div class=" footer w-full h-[92px] ">
+        <div class="w-full h-[40px] my-[4px] flex flex-row items-center justify-between 
+        
+        ">
+            <div class="w-full h-full flex flex-row items-center justify-start  gap-[8px]
+         [&>*]:text-2xl [&>*]:cursor-pointer [&>*]:self-center
+        [&>*:hover]:scale-110">
+                @if(post.likedByCurrentUser) {
+                <i (click)="dislike(post.id)" class="fa-solid fa-heart  text-red-500 focus:scale-120 "> </i>
+                }
+                @else {
+                <i (click)="like(post.id)"
+                    class="fa-regular fa-heart text-white hover:text-red-500 hover:fa-solid active:fa-solid active:text-red-500 ">
+                </i>
+                }
+                <i class="fa-regular fa-comment text-white  " (click)="openModalC(post.id)"> </i>
+                <i class="fa-regular fa-paper-plane text-white "> </i>
+            </div>
+            <div class="w-full h-full flex flex-row items-center justify-end
+        [&>*]:text-white [&>*]:text-2xl [&>*]:cursor-pointer [&>*]:self-center
+        [&>*:hover]:scale-110">
+                <i class="fa-regular fa-bookmark  "> </i>
+            </div>
+        </div>
+        <div class="w-full h-fit my-[4px] flex flex-col items-start justify-center relative z-10">
+            <span class="text-white w-fit text-xs cursor-pointer font-semibold" (click)="openModalC(post.id)">
+                {{post.likesCount}} Likes {{post.commentsCount}} Comments
+            </span>
+            <div class="w-full h-fit my-[4px] flex flex-row items-start justify-start">
+                <a href="/{{post.user.nick}}" class="text-white w-fit text-xs cursor-pointer font-semibold"> {{post.user.nick}}</a>
+                <span class="text-white w-fit text-xs font-semibold ml-[8px]"> {{post.description}}</span>
+            </div>
+            
+                <!-- comment-form.component.html -->
+                <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="w-full flex flex-row items-center justify-between ">
+                    <textarea formControlName="comment" placeholder="Add a comment..."
+                        class="w-full h-[20px] resize-none bg-black text-white text-xs placeholder:text-white placeholder:text-xs"></textarea>
+                    <input type="submit" [ngClass]="{'hidden': (commentForm.value.comment === '')}"
+                        class="text-indigo-500 cursor-pointer font-semibold text-xs px-[8px]" value="Post" />
+                    <div class="text-red-500 text-xs absolute right-0 top-0"
+                        *ngIf="commentForm.controls.comment.invalid && commentForm.controls.comment.touched">
+                        No puedes comentar con menos de 3 caracteres.
+                    </div>
+                </form>
+
+
+           
+        </div>
+    </div>
+</div>

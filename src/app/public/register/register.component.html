@@ -1,0 +1,92 @@
+<main class="w-full h-full mt-3 flex flex-col justify-center items-center ">
+    <div class="w-[350px] border border-gray-300 flex flex-col justify-center items-center">
+        <a class="w-3/4 text-center my-10" href="">
+            <i data-visualcompletion="css-img" aria-label="Instagram" class="" role="img"
+                style="background-image: url(&quot;https://static.cdninstagram.com/rsrc.php/v3/yM/r/8n91YnfPq0s.png&quot;); background-position: 0px -52px; background-size: auto; width: 175px; height: 51px; background-repeat: no-repeat; display: inline-block;"></i>
+        </a>
+        <p class="text-md w-3/4 font-semibold text-center text-gray-500 ">Sign up to see photos and videos from your
+            friends.</p>
+
+        <button class="text-sm px-2 py-0.5 w-3/4 bg-[rgba(0,149,246,1)] text-white rounded-md font-semibold  "> <i
+                class="fa-brands fa-square-facebook text-lg"></i> Log in with Facebook</button>
+        <div class="flex items-center w-3/4 justify-between">
+            <div class="w-[111px] h-[1px] bg-gray-300"></div>
+            <span class="text-sm px-3 py-2  text-gray-500 font-semibold">OR</span>
+            <div class="w-[111px] h-[1px] bg-gray-300"></div>
+
+        </div>
+        <form [formGroup]="myFormreg" class="w-[270px] flex flex-col mt-3 relative" (ngSubmit)="submit()">
+
+            <input formControlName="email" class=" bg-gray-100 text-xs 
+            placeholder-gray-500 
+            border 
+            border-gray-300 w-full h-[38px] px-2 mb-1" type="email" placeholder="Your email">
+            @if(myFormreg.get('email')?.errors?.['required'] && myFormreg.get('email')?.touched ) {
+            <span class="text-red-500 text-xs mb-1">The email is required</span>
+            }
+            @else if(myFormreg.get('email')?.errors?.['email'] && myFormreg.get('email')?.touched ) {
+            <span class="text-red-500 text-xs mb-1">The email is not valid</span>
+            }
+            @else if(myFormreg.get('email')?.errors?.['duplicate']) {
+            <span class="text-red-500 text-xs mb-1">{{myFormreg.get('email')?.errors?.['duplicate']}}</span>
+            }
+
+            <input formControlName="name" class=" bg-gray-100 text-xs 
+            placeholder-gray-500 
+            border 
+            border-gray-300 w-full h-[38px] px-2 mb-1" type="text" placeholder="Firsts Name">
+            @if(myFormreg.get('name')?.errors?.['required'] && myFormreg.get('name')?.touched ) {
+            <span class="text-red-500 text-xs mb-1">The name is required</span>
+            }
+
+            <input formControlName="surname" class=" bg-gray-100 text-xs 
+            placeholder-gray-500 
+            border 
+            border-gray-300 w-full h-[38px] px-2 mb-1" type="text" placeholder="Lasts Name">
+            @if(myFormreg.get('surname')?.errors?.['required'] && myFormreg.get('surname')?.touched ) {
+            <span class="text-red-500 text-xs mb-1">The surname is required</span>
+            }
+
+            <input formControlName="nick" class=" bg-gray-100 text-xs 
+            placeholder-gray-500 
+            border 
+            border-gray-300 w-full h-[38px] px-2 mb-1" type="text" placeholder="Nick Name">
+            @if(myFormreg.get('nick')?.errors?.['required'] && myFormreg.get('nick')?.touched ) {
+            <span class="text-red-500 text-xs mb-1">The nick is required</span>
+            } @else if(myFormreg.get('nick')?.errors?.['duplicate']) {
+            <span class="text-red-500 text-xs mb-1">{{myFormreg.get('nick')?.errors?.['duplicate']}}</span>
+            }
+            <input formControlName="password" class=" bg-gray-100 text-xs placeholder-gray-500 border
+            border-gray-300 w-full h-[38px] px-2 mb-2" type="password" placeholder="Password">
+            @if(myFormreg.get('password')?.errors?.['required'] && myFormreg.get('password')?.touched ) {
+            <span class="text-red-500 text-xs mb-1">The password is required</span>
+            }
+
+            <span class=" w-[270px] text-center text-xs text-gray-500 mb-3 [&>a]:text-blue-900">People who use our
+                service may have uploaded your contact information to Instagram. <a href="">Learn More</a></span>
+
+            <span class=" w-[270px] 
+            text-center text-xs text-gray-500 mb-3
+            [&>a]:text-blue-900
+            ">
+                By signing up, you agree to our <a class="">Terms</a>, <a class="">Privacy Policy</a> and <a
+                    class=" ">Cookie Policy</a>.
+            </span>
+
+            <input [disabled]="myFormreg.invalid" class="bg-[rgba(0,149,246,1)] text-white text-sm 
+            
+            w-full h-[32px] py-[6px] px-[16px] mb-3
+            hover:bg-blue-500 rounded-lg cursor-pointer
+            disabled:opacity-50 disabled:cursor-default
+            " type="submit" value="Register">
+        </form>
+
+
+
+
+    </div>
+    <div class="w-[350px] border my-3 px-3 py-5 border-gray-300 flex flex-col justify-center items-center">
+        <p class="text-sm text-gray-500">Have an account? <a href="/login"
+                class="text-[rgba(0,149,246,1)] font-semibold">Log in</a></p>
+    </div>
+</main>

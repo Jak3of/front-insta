@@ -1,0 +1,76 @@
+<div class=" w-full  h-full bg-black flex flex-col flex-grow overflow-y-auto z-20">
+    <div class=" flex flex-row w-full h-full justify-center   overflow-y-auto">
+        <div class="w-full md:w-[555px] h-full   pt-[16px] ">
+            <div class="h-[101px] w-full  truncate relative  z-10">
+                <div
+                    [ngClass]="{ ' hidden': !statusleft }"
+                    class=" left-2 fa-solid z-10 fa-circle-chevron-left text-white text-2xl absolute top-1/2 -translate-y-1/2"
+                    (click)="buttonleft()"
+                    >
+                    
+                </div>
+                <div class=" carousel w-[555px] h-full flex flex-row items-stretch gap-[13px]  px-[8px] transition-transform duration-300 ease-in-out ">
+
+                    @for (statu of status; track statu) {
+                    <div class="h-full w-[66px] flex flex-col items-center justify-center">
+                        <a href="/{{statu.nick}}" class="w-full h-full flex flex-col items-center justify-center">
+                            <div
+                                class="w-[66px] h-[66px] bg-gradient-to-tr from-yellow-500 to-rose-700 rounded-full flex items-center justify-center">
+
+                                <div class="w-[62px] h-[62px] bg-black rounded-full flex items-center justify-center ">
+                                    <img src="{{ environmento.apiUrl}}getimage/{{statu.image ?? 'default.png'}}"
+                                        class="w-[56px] h-[56px] object-cover rounded-full " />
+                                </div>
+                            </div>
+
+                            <span
+                                class="text-white w-full text-center text-xs overflow-hidden text-ellipsis truncate">{{statu.nick}}</span>
+
+                        </a>
+                    </div>
+                    }
+
+                </div>
+                <div
+                    [ngClass]="{ ' hidden': !statusright }"
+                    (click)="buttonright()"
+                    class=" fa-solid fa-circle-chevron-right text-white text-2xl absolute top-1/2 -translate-y-1/2 right-2 z-10">
+                </div>
+
+            </div>
+
+            <div class="max-w-[470px] w-auto mx-auto h-full  mt-[16px] mb-[53px]">
+                @if (posts.length == 0) {
+                <div class="w-full h-full flex flex-col items-center justify-center">
+                    <span class="text-white w-full text-center text-xs overflow-hidden text-ellipsis truncate">No Posts
+                        Found</span>
+                </div>
+                }
+                @else if (posts[0].charged) {
+                <div class="w-full h-full flex flex-col items-center justify-center">
+                    <span
+                        class="text-white w-full text-center text-xs overflow-hidden text-ellipsis truncate">{{posts[0].charged}}</span>
+                </div>
+                } @else {
+                @for (post of posts; track post) {
+                <!-- is funcion pass on click to postcard -->
+                <app-postcard [post]="post" (toggleModalEvent)="openModal($event)" (toggleLikeEvent)="like($event)"
+                    (toggleDislikeEvent)="dislike($event)"
+                    (toggleCommentEvent)="commentPost($event.id, $event.content)"></app-postcard>
+                }
+                }
+
+
+            </div>
+
+        </div>
+        <div class="w-[383px] h-screen xl:block hidden">
+        </div>
+    </div>
+
+</div>
+@if (show){
+<app-postmodal [postModal]="postModal" [fechaModal]="fechaModal" (toggleModalEvent)="openModal($event)"
+    (toggleLikeEvent)="like($event)" (toggleDislikeEvent)="dislike($event)"
+    (toggleCommentEvent)="commentPost($event.id, $event.content)"></app-postmodal>
+}
